@@ -41,27 +41,15 @@ tasks.withType<KotlinCompile> {
 		jvmTarget = "11"
 	}
 }
-//
-//tasks.register("npmInstall") {
-//}
+
 tasks.register<Exec>("npmInstall") {
 	workingDir("client/")
-	commandLine("npm", "install")
+	commandLine("npm", "run", "build")
 }
 
-
-
-//task npmInstall(type: Exec) {
-//	workingDir 'src/main/webapp'
-//	commandLine 'npm', 'install'
-//}
-
-tasks.register("hello") {
-	doLast {
-		println(projectDir)
-	}
+tasks.register<Copy>("copyStatic") {
+    from(file("$buildDir/../client/build"))
+    into(file("$buildDir/../static"))
 }
 
-
-
-tasks["build"].dependsOn("npmInstall")
+tasks["build"].dependsOn("npmInstall", "copyStatic")
