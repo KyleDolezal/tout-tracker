@@ -1,4 +1,4 @@
-package io.github.kyledolezal.ToutTracker
+package io.github.kyledolezal.touttracker
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest

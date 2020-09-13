@@ -1,4 +1,4 @@
-package io.github.kyledolezal.ToutTracker.controllers
+package io.github.kyledolezal.touttracker.controllers
 
 import org.springframework.http.ResponseEntity
 import org.springframework.http.ResponseEntity.*

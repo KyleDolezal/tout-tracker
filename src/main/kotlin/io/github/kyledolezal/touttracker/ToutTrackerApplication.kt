@@ -1,4 +1,4 @@
-package io.github.kyledolezal.ToutTracker
+package io.github.kyledolezal.touttracker
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
