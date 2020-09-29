@@ -12,8 +12,10 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
         web
             .ignoring()
             .antMatchers("/")
+            .antMatchers("/authenticate")
             .antMatchers("/static/**")
             .antMatchers("/index.html")
+
     }
 
     @Autowired
