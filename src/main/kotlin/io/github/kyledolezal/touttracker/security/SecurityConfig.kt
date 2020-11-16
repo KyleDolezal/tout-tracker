@@ -15,15 +15,14 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
             .antMatchers("/authenticate")
             .antMatchers("/static/**")
             .antMatchers("/index.html")
-
     }
 
     @Autowired
     fun configureGlobal(auth: AuthenticationManagerBuilder): Unit {
         auth
-                .inMemoryAuthentication()
-                .withUser("user").password("user").roles("USER")
-                .and()
-                .withUser("admin").password("admin").roles("ADMIN")
+            .inMemoryAuthentication()
+            .withUser("user").password("user").roles("USER")
+            .and()
+            .withUser("admin").password("admin").roles("ADMIN")
     }
 }
