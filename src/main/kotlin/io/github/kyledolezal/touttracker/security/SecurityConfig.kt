@@ -15,6 +15,7 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
             .ignoring()
             .antMatchers("/")
             .antMatchers("/authenticate")
+            .antMatchers("/api/register")
             .antMatchers("/static/**")
             .antMatchers("/index.html")
     }
@@ -22,20 +23,20 @@ class SecurityConfig : WebSecurityConfigurerAdapter() {
     override fun configure(http: HttpSecurity) {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/authenticate", "static/**/", "index.html").permitAll()
-                .anyRequest().authenticated() // 7
+                .antMatchers("/", "/api/authenticate", "/api/register", "static/**/", "index.html").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/index.html")
                 .permitAll()
     }
-
-    @Autowired
-    fun configureGlobal(auth: AuthenticationManagerBuilder): Unit {
-        auth
-            .inMemoryAuthentication()
-            .withUser("user").password("user").roles("USER")
-            .and()
-            .withUser("admin").password("admin").roles("ADMIN")
-    }
+//
+//    @Autowired
+//    fun configureGlobal(auth: AuthenticationManagerBuilder): Unit {
+//        auth
+//            .inMemoryAuthentication()
+//            .withUser("user").password("user").roles("USER")
+//            .and()
+//            .withUser("admin").password("admin").roles("ADMIN")
+//    }
 }
