@@ -1,13 +1,11 @@
 package io.github.kyledolezal.touttracker
 
 import org.junit.jupiter.api.Test
-import org.springframework.boot.test.context.SpringBootTest
+import org.junit.jupiter.api.Assertions.assertEquals
 
-@SpringBootTest
 class ToutTrackerApplicationTests {
-
 	@Test
-	fun contextLoads() {
+	fun testAdd()  {
+		assertEquals(42, Integer.sum(18, 24))
 	}
-
 }
