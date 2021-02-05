@@ -34,6 +34,7 @@ dependencies {
 	}
 	testImplementation("org.springframework.security:spring-security-test")
 	testImplementation("org.junit.jupiter:junit-jupiter-api:5.4.2")
+	testImplementation("org.mockito:mockito-inline:2.13.0")
 	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.4.2")
 }
 
@@ -44,7 +45,7 @@ tasks.withType<Test> {
 tasks.withType<KotlinCompile> {
 	kotlinOptions {
 		freeCompilerArgs = listOf("-Xjsr305=strict")
-		jvmTarget = "11"
+		jvmTarget = "1.8"
 	}
 }
 
