@@ -49,9 +49,15 @@ import org.springframework.web.context.WebApplicationContext
 import org.springframework.test.web.servlet.MockMvc
 
 import org.apache.coyote.http11.Constants.a
+import org.junit.jupiter.api.Disabled
+import org.mockito.ArgumentMatchers
+import org.springframework.boot.test.mock.mockito.MockBean
+import org.mockito.ArgumentCaptor
 
+import org.mockito.Captor
 
-
+import org.apache.coyote.http11.Constants.a
+import org.mockito.ArgumentMatchers.argThat
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -74,32 +80,30 @@ class AuthControllerTest(@Autowired val restTemplate: TestRestTemplate) {
     @Autowired
     var webApplicationContext: WebApplicationContext? = null
 
-    protected fun setUp() {
-        mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext!!).build()
-    }
+    @Captor
+    lateinit var userCaptor: ArgumentCaptor<User>
+
+    @MockBean
+    lateinit var userRepository: UserRepository
 
     @Test
     fun `User registration creates a new user`() {
-        val mockMvc = MockMvcBuilders
-                .standaloneSetup(authController)
-                .build()
+        val user = User(1L, "username", "email@email.com", "password")
 
-//        val mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext!!).build()
-//        mvc.perform(MockMvcRequestBuilders.post("http://localhost:$port/api/register", User(67132L, "username913627", "email613272@asdf.com", "password122"))
-//        mockMvc.perform(post("http://localhost:$port/api/register", User(67132L, "username913627", "email61327@asdf.com", "password12")))
-//                .andExpect(status().is1xxInformational)
-//                .andReturn()
+        restTemplate.postForEntity<User>("http://localhost:$port/api/register", user, User::class)
 
+        Mockito.verify(userRepository).save(argThat { user: User ->
+            user.id == 1L &&
+            user.email == "email@email.com" &&
+            user.username == "username"
+        })
+    }
 
-//        var user = restTemplate.postForObject<User>("http://localhost:$port/api/register", User(91172112L, "username91111227", "email92111217@asdf.com", "password12"), User::class)
-        var user = restTemplate.postForEntity<User>("http://localhost:$port/api/register", User(912352L, "username923527", "email95dd3211@asdf.com", "password122"), User::class)
-//      rest
+    @Test
+    fun `User creation results in response with user details`() {
+        val user = User(1L, "username", "email@email.com", "password")
 
-//        localMockRepository.save(User(97112L, "username91127", "email91127@asdf.com", "password12"))
-//        Mockito.verify(localMockRepository, times(1)).save(any<User>(User::class.java))
-        print("---------------")
-        println(user)
-        print("---------------")
-        assertThat(1).isEqualTo(1)
+        val response = restTemplate.postForEntity<User>("http://localhost:$port/api/register", user, User::class)
+        assert(response.statusCode.is2xxSuccessful)
     }
 }
